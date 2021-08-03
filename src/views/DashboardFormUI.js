@@ -22,7 +22,7 @@ export const modal = () => (`
   `)
 
 export default (bill) => {
-
+//L36 origine : <span>${formatDate(bill.date)}</span>
   return (`
     <div class="container dashboard-form" data-testid="dashboard-form">
       <div class="row">
@@ -33,7 +33,7 @@ export default (bill) => {
           <div class='input-field'> ${bill.name} </div>
           <label for="datepicker" class="bold-label">Date</label>
           <div class='input-field input-flex'>
-            <span>${formatDate(bill.date)}</span>
+            <span>${bill.date}</span>
             <span> ${calendarIcon} </span>
           </div>
         </div>
