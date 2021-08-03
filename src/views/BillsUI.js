@@ -1,12 +1,12 @@
 import VerticalLayout from './VerticalLayout.js'
 import ErrorPage from "./ErrorPage.js"
 import LoadingPage from "./LoadingPage.js"
-import { formatDate} from "../app/format.js" //à mettre ici ? voir avec mentor mis en forme de la date après le tri mais nouvelle erreur au terminal = modification regex du test ?
+//import { formatDate} from "../app/format.js" //à mettre ici ? voir avec mentor mis en forme de la date après le tri mais nouvelle erreur au terminal = modification regex du test ?
 import Actions from './Actions.js'
 
 const row = (bill) => {
 
-  bill.date = ((/^((19|20)\d\d)[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i).test(bill.date)) ? formatDate(bill.date) : ``
+  //bill.date = ((/^((19|20)\d\d)[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i).test(bill.date)) ? formatDate(bill.date) : ``
   
   return (`
     <tr>

@@ -42,7 +42,7 @@ export default class {
               return {
                 ...doc.data(),
                 date: formatDate(doc.data().date),//test pour formatDate
-                date: doc.data().date,// format conservé pour tri
+                //date: doc.data().date,// format conservé pour tri
                 status: formatStatus(doc.data().status)
               }
             } catch(e) {
