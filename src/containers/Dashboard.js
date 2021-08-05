@@ -169,7 +169,8 @@ export default class {
           date: doc.data().date,
           status: doc.data().status
         }))
-        return bills
+        return bills.filter((bill=>bill.date=="2021-08-03"||bill.name.includes("consultation")))// filtre provisoire pour test
+        //return bills
       })
       .catch(console.log)
     }
