@@ -4,7 +4,7 @@ import BigBilledIcon from '../assets/svg/big_billed.js'
 import { ROUTES_PATH } from '../constants/routes.js'
 import USERS_TEST from '../constants/usersTest.js'
 import Logout from "./Logout.js"
-//L49 origine : <span>${formatDate(bill.date)}</span>
+
 export const filteredBills = (data, status) => {
   return (data && data.length) ?
     data.filter(bill => {
@@ -33,7 +33,7 @@ export const card = (bill) => {
   const lastName = firstAndLastNames.includes('.') ?
     firstAndLastNames.split('.')[1] : firstAndLastNames
   
-  bill.date = ((/^((19|20)\d\d)[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i).test(bill.date)) ? formatDate(bill.date) : `Error Format Date : ${bill.date}`
+  //bill.date = ((/^((19|20)\d\d)[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i).test(bill.date)) ? formatDate(bill.date) : `Error Format Date : ${bill.date}`
   
   return (`
     <div class='bill-card' id='open-bill${bill.id}' data-testid='open-bill${bill.id}'>
@@ -46,7 +46,7 @@ export const card = (bill) => {
         <span> ${bill.amount} € </span>
       </div>
       <div class='date-type-container'>
-        <span> ${bill.date} </span>
+        <span> ${formatDate(bill.date)} </span>
         <span> ${bill.type} </span>
       </div>
     </div>
