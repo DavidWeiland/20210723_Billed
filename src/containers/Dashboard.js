@@ -4,7 +4,7 @@ import BigBilledIcon from '../assets/svg/big_billed.js'
 import { ROUTES_PATH } from '../constants/routes.js'
 import USERS_TEST from '../constants/usersTest.js'
 import Logout from "./Logout.js"
-
+//L49 origine : <span>${formatDate(bill.date)}</span>
 export const filteredBills = (data, status) => {
   return (data && data.length) ?
     data.filter(bill => {
