@@ -10,7 +10,8 @@ export default class NewBill {
     const formNewBill = this.document.querySelector(`form[data-testid="form-new-bill"]`)
     formNewBill.addEventListener("submit", this.handleSubmit)
     const file = this.document.querySelector(`input[data-testid="file"]`)
-    file.addEventListener("change", this.handleChangeFile)
+    file.addEventListener("change", (e)=>(file.files[0].type == "image/jpeg"||file.files[0].type == "image/jpg"||file.files[0].type == "image/png") ? this.handleChangeFile(e) : e.target.value="")
+    //file.addEventListener("change", this.handleChangeFile)
     this.fileUrl = null
     this.fileName = null
     new Logout({ document, localStorage, onNavigate })
