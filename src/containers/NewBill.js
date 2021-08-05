@@ -11,7 +11,7 @@ export default class NewBill {
     formNewBill.addEventListener("submit", this.handleSubmit)
     const file = this.document.querySelector(`input[data-testid="file"]`)
     file.addEventListener("change", (e)=>(file.files[0].type == "image/jpeg"||file.files[0].type == "image/jpg"||file.files[0].type == "image/png") ? this.handleChangeFile(e) : e.target.value="")
-    //file.addEventListener("change", this.handleChangeFile)
+    //Ligne initiale : file.addEventListener("change", this.handleChangeFile)
     this.fileUrl = null
     this.fileName = null
     new Logout({ document, localStorage, onNavigate })
