@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">79.78% </span>
+                <span class="strong">82.35% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>71/89</span>
+                <span class='fraction'>70/85</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">81.4% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>36/45</span>
+                <span class='fraction'>35/43</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.71% </span>
+                <span class="strong">89.04% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>66/77</span>
+                <span class='fraction'>65/73</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -280,7 +280,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -338,12 +337,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">8x</span>
@@ -415,6 +414,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -466,7 +466,6 @@ export const card = (bill) =&gt; {
   const lastName = firstAndLastNames.includes('.') ?
 <span class="branch-0 cbranch-no" title="branch not covered" >    firstAndLastNames.split('.')[1] </span>: firstAndLastNames
   
-  //bill.date = ((/^((19|20)\d\d)[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i).test(bill.date)) ? formatDate(bill.date) : `Error Format Date : ${bill.date}`
   
   return (`
     &lt;div class='bill-card' id='open-bill${bill.id}' data-testid='open-bill${bill.id}'&gt;
@@ -479,7 +478,7 @@ export const card = (bill) =&gt; {
         &lt;span&gt; ${bill.amount} € &lt;/span&gt;
       &lt;/div&gt;
       &lt;div class='date-type-container'&gt;
-        &lt;span&gt; ${formatDate(bill.date)} &lt;/span&gt;
+        &lt;span&gt;${formatDate(bill.date)}&lt;/span&gt;
         &lt;span&gt; ${bill.type} &lt;/span&gt;
       &lt;/div&gt;
     &lt;/div&gt;
@@ -525,20 +524,20 @@ export default class {
   handleEditTicket(e, bill, bills) {
     if (this.counter === undefined || this.id !== bill.id) this.counter = 0
     if (this.id === undefined || this.id !== bill.id) this.id = bill.id
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (this.id === undefined) {
-<span class="cstat-no" title="statement not covered" >      $(`#open-bill${bill.id}`).css({ background: '#0D5AE5' })</span>
-<span class="cstat-no" title="statement not covered" >      $('.dashboard-right-container div').html(`</span>
+    /*if (this.id === undefined) {
+      $(`#open-bill${bill.id}`).css({ background: '#0D5AE5' })
+      $('.dashboard-right-container div').html(`
         &lt;div id="big-billed-icon"&gt; ${BigBilledIcon} &lt;/div&gt;
       `)
-<span class="cstat-no" title="statement not covered" >      $('.vertical-navbar').css({ height: '120vh' })</span>
-    } else {
+      $('.vertical-navbar').css({ height: '120vh' })
+    } else {*/
       bills.forEach(b =&gt; {
         $(`#open-bill${b.id}`).css({ background: '#0D5AE5' })
       })
       $(`#open-bill${bill.id}`).css({ background: '#2A2B35' })
       $('.dashboard-right-container div').html(DashboardFormUI(bill))
       $('.vertical-navbar').css({ height: '150vh' })
-    }
+    //}
 &nbsp;
     $('#icon-eye-d').on('click',this.handleClickIconEye)
     $('#btn-accept-bill').on('click',<span class="fstat-no" title="function not covered" >(e</span>) =&gt; <span class="cstat-no" title="statement not covered" >this.handleAcceptSubmit(e, bill))</span>
@@ -602,6 +601,7 @@ export default class {
           date: doc.data().date,
           status: doc.data().status
         }))
+        //return bills.filter((bill=&gt;bill.date=="2021-08-03"||bill.name.includes("consultation")))// filtre provisoire pour test
 <span class="cstat-no" title="statement not covered" >        return bills</span>
       })
       .catch(console.log)
@@ -625,7 +625,7 @@ export default class {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Aug 05 2021 19:39:43 GMT+0200 (heure d’été d’Europe centrale)
+                at Fri Aug 06 2021 09:26:10 GMT+0200 (heure d’été d’Europe centrale)
             </div>
         </div>
         <script src="../prettify.js"></script>

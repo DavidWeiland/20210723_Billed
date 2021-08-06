@@ -91,20 +91,20 @@ export default class {
   handleEditTicket(e, bill, bills) {
     if (this.counter === undefined || this.id !== bill.id) this.counter = 0
     if (this.id === undefined || this.id !== bill.id) this.id = bill.id
-    if (this.id === undefined) {
+    /*if (this.id === undefined) {
       $(`#open-bill${bill.id}`).css({ background: '#0D5AE5' })
       $('.dashboard-right-container div').html(`
         <div id="big-billed-icon"> ${BigBilledIcon} </div>
       `)
       $('.vertical-navbar').css({ height: '120vh' })
-    } else {
+    } else {*/
       bills.forEach(b => {
         $(`#open-bill${b.id}`).css({ background: '#0D5AE5' })
       })
       $(`#open-bill${bill.id}`).css({ background: '#2A2B35' })
       $('.dashboard-right-container div').html(DashboardFormUI(bill))
       $('.vertical-navbar').css({ height: '150vh' })
-    }
+    //}
 
     $('#icon-eye-d').on('click',this.handleClickIconEye)
     $('#btn-accept-bill').on('click',(e) => this.handleAcceptSubmit(e, bill))
@@ -168,8 +168,8 @@ export default class {
           date: doc.data().date,
           status: doc.data().status
         }))
-        return bills.filter((bill=>bill.date=="2021-08-03"||bill.name.includes("consultation")))// filtre provisoire pour test
-        //return bills
+        //return bills.filter((bill=>bill.date=="2021-08-03"||bill.name.includes("consultation")))// filtre provisoire pour test
+        return bills
       })
       .catch(console.log)
     }
