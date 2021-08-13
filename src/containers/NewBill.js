@@ -10,25 +10,34 @@ export default class NewBill {
     const formNewBill = this.document.querySelector(`form[data-testid="form-new-bill"]`)
     formNewBill.addEventListener("submit", this.handleSubmit)
     const file = this.document.querySelector(`input[data-testid="file"]`)
-    file.addEventListener("change", (e)=>(file.files[0].type == "image/jpeg"||file.files[0].type == "image/jpg"||file.files[0].type == "image/png") ? this.handleChangeFile(e) : e.target.value="")
-    //Ligne initiale : file.addEventListener("change", this.handleChangeFile)
+    file.addEventListener("change", this.handleChangeFile)
     this.fileUrl = null
     this.fileName = null
     new Logout({ document, localStorage, onNavigate })
   }
   handleChangeFile = e => {
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
-    const filePath = e.target.value.split(/\\/g)
-    const fileName = filePath[filePath.length-1]
-    this.firestore
-      .storage
-      .ref(`justificatifs/${fileName}`)
-      .put(file)
-      .then(snapshot => snapshot.ref.getDownloadURL())
-      .then(url => {
-        this.fileUrl = url
-        this.fileName = fileName
-      })
+    if (file.type == "image/jpeg" || file.type == "image/jpg" || file.type == "image/png") {
+      console.log(`${file.type} est un type de fichier image valide`)
+      const filePath = e.target.value.split(/\\/g)
+      const fileName = filePath[filePath.length - 1]
+      if (this.firestore) {
+        this.firestore
+        .storage
+        .ref(`justificatifs/${fileName}`)
+        .put(file)
+        .then(snapshot => snapshot.ref.getDownloadURL())
+        .then(url => {
+          this.fileUrl = url
+          this.fileName = fileName
+        })
+        .catch(console.log)
+      }
+    } else {
+      console.log(`${file.type} n'est pas un type de fichier image valide (jpeg, jpg ou png)`)
+      this.fileName = `fichier non valide`
+      e.target.value = ``
+    }
   }
   handleSubmit = e => {
     e.preventDefault()
