@@ -103,7 +103,7 @@ describe("Given I am connected as an employee", () => {
       expect(handleSubmit).toHaveBeenCalled()
       expect(screen.getByText('Mes notes de frais')).toBeTruthy()
     })
-    test(('Then, I should be create a new bill'), () => {
+    test(('Then, I should be create a new bill'), async () => {
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname })
       }
@@ -121,31 +121,33 @@ describe("Given I am connected as an employee", () => {
   })
 })
 
-// à travailler encore
+// Test d'integration POST
 describe("Given I am a user connected as Employee", () => {
   describe("When I navigate to NewBill", () => {
     test("fetches bill to mock API POST", async () => {
       const getSpy = jest.spyOn(firebase, "get")
-      let bills = await firebase.get(bill)
+      let bills = await firebase.get()
       expect(getSpy).toHaveBeenCalledTimes(1)
       expect(bills.data.length).toBe(4)
+      bills.data.push(bill)
+      expect(bills.data.length).toBe(5)
     })
     test("fetches bill to an API and fails with 404 message error", async () => {
       firebase.get.mockImplementationOnce(() =>
-        Promise.reject(new Error("Erreur 404"))
+        Promise.reject(new Error("Erreur 405 : Method Not Allowed"))
       )
-      const html = BillsUI({ error: "Erreur 404" })
+      const html = BillsUI({ error: "Erreur 405 : Method Not Allowed" })
       document.body.innerHTML = html
-      const message = await screen.getByText(/Erreur 404/)
+      const message = await screen.getByText(/Erreur 405 : Method Not Allowed/)
       expect(message).toBeTruthy()
     })
     test("fetches messages from an API and fails with 500 message error", async () => {
       firebase.get.mockImplementationOnce(() =>
-        Promise.reject(new Error("Erreur 500"))
+        Promise.reject(new Error("Erreur 500 : Internal Server Error"))
       )
-      const html = BillsUI({ error: "Erreur 500" })
+      const html = BillsUI({ error: "Erreur 500 : Internal Server Error" })
       document.body.innerHTML = html
-      const message = await screen.getByText(/Erreur 500/)
+      const message = await screen.getByText(/Erreur 500 : Internal Server Error/)
       expect(message).toBeTruthy()
     })
   })
