@@ -1,9 +1,11 @@
 import { screen } from "@testing-library/dom"
-import BillsUI, {rows} from "../views/BillsUI.js"
+import BillsUI from "../views/BillsUI.js"
 import { bills } from "../fixtures/bills.js"
 import firebase from "../__mocks__/firebase"
 import { localStorageMock } from "../__mocks__/localStorage.js"
 import Bills from "../containers/Bills.js"
+import userEvent from '@testing-library/user-event'
+import { ROUTES } from "../constants/routes"
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
@@ -15,8 +17,9 @@ describe("Given I am connected as an employee", () => {
     test("Then bills should be ordered from earliest to latest", () => {
       const html = BillsUI({ data: bills })
       document.body.innerHTML = html
-      const dates = screen.getAllByText(/^((19|20)\d\d)[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i).map(a => a.innerHTML)
-      //const dates = screen.getAllByText(/^((19|20)\d\d)|(\d{1,2})[- /.](0[1-9]|1[012])|(Jan.|Fév.|Mar.|Avr.|Mai|Jui.|Aoû.|Sep.|Oct.|Nov.|Déc.)[- /.](0[1-9]|[12][0-9]|3[01])|(\d{2})$/i).map(a => a.innerHTML)
+      //const dates = screen.getAllByText(/^((19|20)\d\d)[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i).map(a => a.innerHTML)
+      // code à ajouter pour tester date au format JJ MMM AA si mise en forme dans BillsUI (!= Bills) :
+      const dates = screen.getAllByText(/^((19|20)\d\d)|(\d{1,2})[- /.](0[1-9]|1[012])|(Jan.|Fév.|Mar.|Avr.|Mai|Jui.|Aoû.|Sep.|Oct.|Nov.|Déc.)[- /.](0[1-9]|[12][0-9]|3[01])|(\d{2})$/i).map(a => a.innerHTML)
       const antiChrono = (a, b) => ((a < b) ? 1 : -1)
       const datesSorted = [...dates].sort(antiChrono)
       expect(dates).toEqual(datesSorted)
@@ -38,8 +41,123 @@ describe("Given I am connected as an employee", () => {
       expect(screen.getAllByText('Erreur')).toBeTruthy()
     })
   })
-
 })
+
+//Test container/Bills.js
+describe('Given I am connected as an Employee', () => {
+  describe('When I am on Bills page and I click on NewBill button', () => {
+    test('Then, handleClickNewBill() is called', () => {
+      const onNavigate = (pathname) => {
+        document.body.innerHTML = ROUTES({ pathname })
+      }
+      Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+      window.localStorage.setItem('user', JSON.stringify({
+        type: 'Employee'
+      }))
+      const constructorBills = new Bills({
+        document, onNavigate, firestore: null, localStorage: window.localStorage
+      })
+      document.body.innerHTML = BillsUI({ data: [] })
+      const handleClickNewBill = jest.fn(constructorBills.handleClickNewBill)
+      const btnNewBill = screen.getByTestId('btn-new-bill')
+      btnNewBill.addEventListener('click', handleClickNewBill)
+      userEvent.click(btnNewBill)
+      expect(handleClickNewBill).toHaveBeenCalled()
+      
+    })
+    test('Then, NewBill page is open', () => {
+      const onNavigate = (pathname) => {
+        document.body.innerHTML = ROUTES({ pathname })
+      }
+      Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+      window.localStorage.setItem('user', JSON.stringify({
+        type: 'Employee'
+      }))
+      const constructorBills = new Bills({
+        document, onNavigate, firestore: null, localStorage: window.localStorage
+      })
+      document.body.innerHTML = BillsUI({ data: [] })
+      const handleClickNewBill = jest.fn(constructorBills.handleClickNewBill)
+      const btnNewBill = screen.getByTestId('btn-new-bill')
+      btnNewBill.addEventListener('click', handleClickNewBill)
+      
+      userEvent.click(btnNewBill)
+      expect(screen.getByText('Envoyer une note de frais')).toBeTruthy()
+    })
+  })
+
+  describe('When I am on Bills page and I click on icon Eye', () => {
+    test('Then, handleClickIconEye() is called', () => {
+      const onNavigate = (pathname) => {
+        document.body.innerHTML = ROUTES({ pathname })
+      }
+      Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+      window.localStorage.setItem('user', JSON.stringify({
+        type: 'Employee'
+      }))
+      document.body.innerHTML = BillsUI({ data: bills })
+      const constructorBills = new Bills({
+        document, onNavigate, firestore:null, localStorage: window.localStorage
+      })
+      const handleClickIconEye = jest.fn(constructorBills.handleClickIconEye)
+      const iconEye = screen.getAllByTestId('icon-eye')
+      let index = 0
+      iconEye.forEach(icon => {
+        icon.addEventListener('click', handleClickIconEye(icon))
+        index++
+        userEvent.click(icon)
+        expect(handleClickIconEye).toHaveBeenCalledTimes(index)
+        expect(handleClickIconEye).toHaveBeenCalled()
+      })
+      userEvent.click(iconEye[0])
+      userEvent.click(iconEye[1])
+      userEvent.click(iconEye[2])
+      userEvent.click(iconEye[3])
+      expect(handleClickIconEye).toHaveBeenCalled()
+      expect(handleClickIconEye).toHaveBeenCalledTimes(4)
+    })
+    test('Then, modale is open', () => {
+      const onNavigate = (pathname) => {
+        document.body.innerHTML = ROUTES({ pathname })
+      }
+      Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+      window.localStorage.setItem('user', JSON.stringify({
+        type: 'Employee'
+      }))
+      document.body.innerHTML = BillsUI({ data: bills })
+      const constructorBills = new Bills({
+        document, onNavigate, firestore:null, localStorage: window.localStorage
+      })
+      const handleClickIconEye = jest.fn(constructorBills.handleClickIconEye)
+      const iconEye = screen.getAllByTestId('icon-eye')
+      iconEye.forEach(icon => {
+        icon.addEventListener('click', handleClickIconEye(icon))
+      })
+      userEvent.click(iconEye[0])
+      expect(screen.getByText('Justificatif')).toBeTruthy()
+    })
+  })
+
+  describe('When I am on Bills page', () => {
+    test('Then, charging data launch getBills', () => {
+      const onNavigate = (pathname) => {
+        document.body.innerHTML = ROUTES({ pathname })
+      }
+      Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+      window.localStorage.setItem('user', JSON.stringify({
+        type: 'Employee'
+      }))
+      const constructorBills = new Bills({
+        document, onNavigate, firestore:null, localStorage: window.localStorage
+      })
+      const getBills = jest.fn(constructorBills.getBills)
+      getBills()
+      expect(getBills).toHaveBeenCalled()
+      expect(screen.getAllByText("Se connecter")).toBeTruthy()
+    })
+  })
+})
+
 
 describe("Given I am a user connected as Employee", () => {
   describe("When I navigate to bills", () => {

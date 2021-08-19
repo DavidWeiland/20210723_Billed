@@ -94,11 +94,10 @@ describe('Given I am connected as an Admin', () => {
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname })
       }
-      const firestore = null
 
       Object.defineProperty(window, 'localStorage', { value: localStorageMock })
       const dashboard = new Dashboard({
-        document, onNavigate, firestore, bills, localStorage: window.localStorage
+        document, onNavigate, firestore : null, bills, localStorage: window.localStorage
       })
 
       const handleEditTicket = jest.fn((e) => dashboard.handleEditTicket(e, bills[0], bills))   
@@ -134,9 +133,9 @@ describe('Given I am connected as Admin, and I am on Dashboard page, and I click
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname })
       }
-      const firestore = null
+
       const dashboard = new Dashboard({
-        document, onNavigate, firestore, bills, localStorage: window.localStorage
+        document, onNavigate, firestore : null, bills, localStorage: window.localStorage
       })
 
       const acceptButton = screen.getByTestId("btn-accept-bill-d")
@@ -159,9 +158,9 @@ describe('Given I am connected as Admin, and I am on Dashboard page, and I click
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname })
       }
-      const firestore = null
+
       const dashboard = new Dashboard({
-        document, onNavigate, firestore, bills, localStorage: window.localStorage
+        document, onNavigate, firestore: null, bills, localStorage: window.localStorage
       })
       const refuseButton = screen.getByTestId("btn-refuse-bill-d")
       const handleRefuseSubmit = jest.fn((e) => dashboard.handleRefuseSubmit(e, bills[0]))
@@ -186,9 +185,9 @@ describe('Given I am connected as Admin and I am on Dashboard page and I clicked
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname })
       }
-      const firestore = null
+
       const dashboard = new Dashboard({
-        document, onNavigate, firestore, bills, localStorage: window.localStorage
+        document, onNavigate, firestore: null, bills, localStorage: window.localStorage
       })
 
       const handleClickIconEye = jest.fn(dashboard.handleClickIconEye)

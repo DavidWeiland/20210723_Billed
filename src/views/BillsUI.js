@@ -1,12 +1,15 @@
 import VerticalLayout from './VerticalLayout.js'
 import ErrorPage from "./ErrorPage.js"
 import LoadingPage from "./LoadingPage.js"
-//import { formatDate} from "../app/format.js" //à mettre ici ? voir avec mentor mis en forme de la date après le tri mais nouvelle erreur au terminal = modification regex du test ?
+import { formatDate } from "../app/format.js"
 import Actions from './Actions.js'
 
 const row = (bill) => {
+  
+  //Mis en forme de la date après le tri + container/Bills.js L45 : annulation mise en forme pour tri
+  //Attention : nouvelle erreur au test (jj Mmm. aa comparée à aaaa mm jj) => modification regex du test nécessaire
 
-  //bill.date = ((/^((19|20)\d\d)[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i).test(bill.date)) ? formatDate(bill.date) : ``
+  bill.date = ((/^((19|20)\d\d)[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i).test(bill.date)) ? formatDate(bill.date) : `date error : ${bill.date}`
   
   return (`
     <tr>
@@ -36,18 +39,18 @@ export default ({ data: bills, loading, error }) => {
 
   const modal = () => (`
   <div class="modal fade" id="modaleFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-  <div class="modal-content">
-  <div class="modal-header">
-  <h5 class="modal-title" id="exampleModalLongTitle">Justificatif</h5>
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-  <span aria-hidden="true">&times;</span>
-  </button>
-  </div>
-  <div class="modal-body">
-  </div>
-  </div>
-  </div>
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Justificatif</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        </div>
+      </div>
+    </div>
   </div>
   `)
   
