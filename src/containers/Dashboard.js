@@ -31,10 +31,8 @@ export const card = (bill) => {
   const firstName = firstAndLastNames.includes('.') ?
     firstAndLastNames.split('.')[0] : ''
   const lastName = firstAndLastNames.includes('.') ?
-    firstAndLastNames.split('.')[1] : firstAndLastNames
-  
-  //bill.date = ((/^((19|20)\d\d)[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i).test(bill.date)) ? formatDate(bill.date) : `Error Format Date : ${bill.date}`
-  
+  firstAndLastNames.split('.')[1] : firstAndLastNames
+
   return (`
     <div class='bill-card' id='open-bill${bill.id}' data-testid='open-bill${bill.id}'>
       <div class='bill-card-name-container'>
@@ -92,21 +90,23 @@ export default class {
   handleEditTicket(e, bill, bills) {
     if (this.counter === undefined || this.id !== bill.id) this.counter = 0
     if (this.id === undefined || this.id !== bill.id) this.id = bill.id
-    if (this.id === undefined) {
-      $(`#open-bill${bill.id}`).css({ background: '#0D5AE5' })
-      $('.dashboard-right-container div').html(`
-        <div id="big-billed-icon"> ${BigBilledIcon} </div>
-      `)
-      $('.vertical-navbar').css({ height: '120vh' })
-    } else {
+    //if (this.counter % 2 === 0) {
       bills.forEach(b => {
         $(`#open-bill${b.id}`).css({ background: '#0D5AE5' })
       })
       $(`#open-bill${bill.id}`).css({ background: '#2A2B35' })
       $('.dashboard-right-container div').html(DashboardFormUI(bill))
       $('.vertical-navbar').css({ height: '150vh' })
-    }
+      this.counter ++
+    /*} else {
+      $(`#open-bill${bill.id}`).css({ background: '#0D5AE5' })
 
+      $('.dashboard-right-container div').html(`
+        <div id="big-billed-icon"> ${BigBilledIcon} </div>
+      `)
+      $('.vertical-navbar').css({ height: '120vh' })
+      this.counter ++
+    }*/
     $('#icon-eye-d').on('click',this.handleClickIconEye)
     $('#btn-accept-bill').on('click',(e) => this.handleAcceptSubmit(e, bill))
     $('#btn-refuse-bill').on('click',(e) => this.handleRefuseSubmit(e, bill))
