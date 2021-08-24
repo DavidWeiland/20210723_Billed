@@ -106,12 +106,11 @@ export default class {
       `)
       $('.vertical-navbar').css({ height: '120vh' })
       this.counter++
-      this.handleEditTicket(e, bill, bills)
     }
 
     $('#icon-eye-d').on('click',this.handleClickIconEye)
     $('#btn-accept-bill').on('click',(e) => this.handleAcceptSubmit(e, bill))
-    $('#btn-refuse-bill').on('click',(e) => this.handleRefuseSubmit(e, bill))
+    $('#btn-refuse-bill').on('click', (e) => this.handleRefuseSubmit(e, bill))
   }
 
   handleAcceptSubmit = (e, bill) => {
@@ -139,20 +138,16 @@ export default class {
     if (this.index === undefined || this.index !== index) this.index = index
     if (showTicketStatus[this.index-1] === 0) {
       $(`#arrow-icon${this.index}`).css({ transform: 'rotate(0deg)'})
-      $(`#status-bills-container${this.index}`)
-        .html(cards(filteredBills(bills, getStatus(this.index))))
-        showTicketStatus[this.index-1]++
+      $(`#status-bills-container${this.index}`).html(cards(filteredBills(bills, getStatus(this.index))))
+      showTicketStatus[this.index-1]++
     } else {
       $(`#arrow-icon${this.index}`).css({ transform: 'rotate(90deg)'})
-      $(`#status-bills-container${this.index}`)
-        .html("")
-      showTicketStatus[this.index - 1] = 0
+      $(`#status-bills-container${this.index}`).html("")
+      showTicketStatus[this.index-1]=0
     }
-
-    bills.forEach(bill => {
-      $(`#open-bill${bill.id}`).on('click',(e) => this.handleEditTicket(e, bill, bills))
+    filteredBills(bills, getStatus(this.index)).forEach(bill => {
+      $(`#open-bill${bill.id}`).on('click', (e) => this.handleEditTicket(e, bill, bills))
     })
-
     return bills
 
   }
@@ -171,7 +166,6 @@ export default class {
           date: doc.data().date,
           status: doc.data().status
         }))
-        //return bills.filter((bill=>bill.date=="2021-08-03"||bill.name.includes("consultation")))// filtre provisoire pour test
         return bills
       })
       .catch(console.log)
