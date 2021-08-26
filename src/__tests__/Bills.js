@@ -153,7 +153,6 @@ describe('Given I am connected as an Employee', () => {
       const getBills = jest.fn(constructorBills.getBills)
       getBills()
       expect(getBills).toHaveBeenCalled()
-      expect(screen.getAllByText("Se connecter")).toBeTruthy()
     })
   })
 })
